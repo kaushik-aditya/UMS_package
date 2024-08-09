@@ -5,9 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 // Define the type for the user object
 interface User {
-  id: number;
-  name: string;
-  role: string;
+  id: number; // Ensure each user has a unique ID
+  [key: string]: any; // Allow for dynamic keys
 }
 
 // Define the types for the props
@@ -18,22 +17,31 @@ interface UserListProps {
 }
 
 const UserList: React.FC<UserListProps> = ({ users, onEdit, onDelete }) => {
+  if (users.length === 0) {
+    return <p>No users available</p>; // Handle empty users array
+  }
+
+  // Extract headers from the first user object keys
+  const headers = Object.keys(users[0]).map(key => key.charAt(0).toUpperCase() + key.slice(1));
+
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Role</TableCell>
+            {headers.map(header => (
+              <TableCell key={header}>{header}</TableCell>
+            ))}
             <TableCell>Edit</TableCell>
             <TableCell>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
+          {users.map(user => (
             <TableRow key={user.id}>
-              <TableCell>{user.name}</TableCell>
-              <TableCell>{user.role}</TableCell>
+              {headers.map(header => (
+                <TableCell key={header}>{user[header.toLowerCase()]}</TableCell>
+              ))}
               <TableCell>
                 <IconButton onClick={() => onEdit(user.id)}>
                   <EditIcon />
