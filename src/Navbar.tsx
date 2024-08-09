@@ -3,24 +3,28 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 
 // Define the types for the props
 interface NavbarProps {
-  userName: string;
-  onAdd: () => void;
+  userName?: string;
+  onSignUp: () => void;
   onLogout: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ userName, onAdd, onLogout }) => {
+const Navbar: React.FC<NavbarProps> = ({ userName='', onSignUp, onLogout }) => {
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Welcome, {userName}
+          {userName ? `Welcome, ${userName}` : "Welcome, Guest"}
         </Typography>
-        <Button color="inherit" onClick={onAdd}>
-          Add User
-        </Button>
-        <Button color="inherit" onClick={onLogout} sx={{ ml: 2 }}>
-          Logout
-        </Button>
+        {!userName && (
+          <Button color="inherit" onClick={onSignUp}>
+            Sign Up
+          </Button>
+        )}
+        {userName && (
+          <Button color="inherit" onClick={onLogout} sx={{ ml: 2 }}>
+            Logout
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );
