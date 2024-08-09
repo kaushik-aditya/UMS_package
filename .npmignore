@@ -1,0 +1,29 @@
+# Build artifacts
+dist/
+build/
+out/
+
+# Development dependencies
+node_modules/
+*.log
+
+# Source control files
+.git/
+.gitignore
+.gitattributes
+.DS_Store
+
+# Configuration files
+tsconfig.json
+webpack.config.js
+*.md
+
+# Tests and documentation
+tests/
+specs/
+docs/
+
+# Local development files
+.npmrc
+.env
+.vscode/

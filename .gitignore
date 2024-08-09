@@ -1,0 +1,23 @@
+# Build artifacts
+dist/
+build/
+out/
+
+# Node modules
+node_modules/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE and editor configurations
+.vscode/
+.idea/
+
+# Environment files
+.env
+
+# Dependency and package management files
+package-lock.json
+yarn.lock
+
