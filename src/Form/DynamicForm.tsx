@@ -7,6 +7,8 @@ type DynamicFormProps<T> = {
   setObject: React.Dispatch<React.SetStateAction<T>>;
   buttonText: string;
   onSubmit: () => void;
+  linkText?: string;
+  fullWidth?:boolean;
 };
 
 const DynamicForm = <T extends { [key: string]: string }>({
@@ -14,6 +16,8 @@ const DynamicForm = <T extends { [key: string]: string }>({
   setObject,
   buttonText,
   onSubmit,
+  linkText,
+  fullWidth=false,
 }: DynamicFormProps<T>) => {
   const handleChange = (key: keyof T) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setObject(prevObject => ({
@@ -29,8 +33,7 @@ const DynamicForm = <T extends { [key: string]: string }>({
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
-        width: '50%',
-        height: '75%',
+        width: fullWidth? '100%':"50%",
         padding: 3,
         margin: '0 auto',
         boxShadow: 3,
@@ -44,22 +47,28 @@ const DynamicForm = <T extends { [key: string]: string }>({
       }}
     >
       {Object.keys(object).map((key) => (
-        <TextField
+        (key!=='id' && key!='Role') && (<TextField
+          size='small'
           key={key}
           label={key}
           value={object[key] || ''}
           onChange={handleChange(key as keyof T)}
           variant="outlined"
           fullWidth
-        />
+        />)
       ))}
       <Button
         text={buttonText}
-        size="medium"
+        color='primary'
+        variant='contained'
+        size="small"
         borderRadius="4px"
         sx={{ width: '100%' }}
+        onClick={onSubmit}
       />
-    </Box>
+      {linkText && <a style={{ color: 'red' }} href={`/${linkText}`}>{linkText}</a>}
+</Box>
+    
   );
 };
 
